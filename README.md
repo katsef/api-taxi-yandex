@@ -12,7 +12,7 @@
 $ composer require webazon/api-taxi-yandex
 ```
 
-или скачать пакет с [GitHub](https://github.com/i-pinchuk/php-yandex-taxi-api)
+или скачать пакет с [GitHub](https://github.com/katsef/api-taxi-yandex)
 
 ------
 
