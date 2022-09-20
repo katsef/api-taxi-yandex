@@ -3,19 +3,22 @@
 	"description" : "PHP client for Yandex.Taxi",
 	"type" : "library",
 	"keywords" : [ "api", "taxi", "yandex", "Яндекс.Такси" ],
-	"require" : {
-		"php" : ">=7.2.0"
-	},
-	"license" : "MIT",
-	"autoload" : {
-		"psr-4" : {
-			"Webazon\\ApiTaxiYandex\\" : "src/"
-		}
-	},
 	"authors" : [
 		{
 			"name" : "Aleksey Katsef"
 		}
 	],
+	"require" : {
+		"php" : ">=7.2.0"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "9.1.3"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Webazon\\ApiTaxiYandex\\" : "src/"
+		}
+	},
+	"license" : "MIT",
 	"minimum-stability" : "dev"
 }
