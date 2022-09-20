@@ -2,6 +2,7 @@
 	"name" : "webazon/api-taxi-yandex",
 	"description" : "PHP client for Yandex.Taxi",
 	"type" : "library",
+	"keywords" : [ "api", "taxi", "yandex", "Яндекс.Такси" ],
 	"require" : {
 		"php" : ">=7.2.0"
 	},
