@@ -1,6 +1,6 @@
 {
 	"name" : "webazon/api-taxi-yandex",
-	"description" : "PHP client for Yandex.Taxi",
+	"description" : "Библиотека для парков-партнёров Яндекс.Такси",
 	"type" : "library",
 	"keywords" : [ "api", "taxi", "yandex", "Яндекс.Такси" ],
 	"authors" : [
@@ -9,7 +9,8 @@
 		}
 	],
 	"require" : {
-		"php" : ">=7.2.0"
+		"php" : ">=7.2.0",
+		"ext-curl" : "*"
 	},
 	"require-dev" : {
 		"phpunit/phpunit" : "9.1.3"
