@@ -1,4 +1,4 @@
-![ ](https://storage.yandexcloud.net/webazon/github/yandex_pro.png)
+![ ](https://storage.yandexcloud.net/webazon/github/yandex_pro.webp)
 
 # api-taxi-yandex
 
