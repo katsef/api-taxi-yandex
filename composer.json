@@ -17,5 +17,9 @@
 			"name" : "Aleksey Katsef"
 		}
 	],
-	"minimum-stability" : "dev"
+	"minimum-stability" : "dev",
+	"require-dev" : {
+		"php" : ">=7.2.0",
+		"curl" : "*"
+	}
 }
