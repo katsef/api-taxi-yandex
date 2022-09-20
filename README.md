@@ -59,7 +59,7 @@ $client = new Webazon\ApiTaxiYandex\Client($parkId,$apiKey);
   
   ###### возвращаются в теле ответа
   
-  ```json
+  ```
   {
    headers: {
        	  http: {
