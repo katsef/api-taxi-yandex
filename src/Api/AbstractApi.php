@@ -77,13 +77,122 @@ $b=$out[1];
 
 $r['headers']=$headersArray;
 $r['body']=json_decode($b,true);
+if ($r['headers']['http']['result_code']==200){}else{unset($r['body']);$r['error']=json_decode($b,true);}
 		
 return $r;
 		
 	}
 	
+	protected function validate_russian_phone_number($tel = '')
+	{
+	$tel = trim((string)$tel);
+    if (!$tel) return false;
+    $tel = preg_replace('#[^0-9+]+#uis', '', $tel);
+    if (!preg_match('#^(?:\\+?7|8|)(.*?)$#uis', $tel, $m)) return false;
+    $tel = '+7' . preg_replace('#[^0-9]+#uis', '', $m[1]);
+    if (!preg_match('#^\\+7[0-9]{10}$#uis', $tel, $m)) return false;
+    return $tel;	
+		
+	}
+	
+	protected function normalise_phone($phone) {
+		$resPhone = preg_replace("/[^0-9]/", "", $phone);
+		if (strlen($resPhone) === 11) {
+			$resPhone = preg_replace("/^8/", "7", $resPhone);
+		}
+		return $resPhone;
+	}	
 	
 	
+	protected function driver_push($a,$driver)
+	{
+	$f=false;
+	for ($i=0;$i<count($a);$i++){
+		
+		if($a[$i]['driver_profile']['id']==$driver['driver_profile']['id']){$f=true;}}
+		
+	
+	if ($f===false){array_push($a,$driver);}	
+	return $a;	
+	}
+	
+	protected function utf_encode($string) {
+  		
+  $arrayUtfa = array('%u0410', '%u0430', '%u0411', '%u0431', '%u0412', '%u0432', '%u0413', '%u0433', '%u0414', '%u0434', '%u0415', '%u0435', '%u0401', '%u0451', '%u0416', '%u0436', '%u0417', '%u0437', '%u0418', '%u0438', '%u0419', '%u0439', '%u041a', '%u043a', '%u041b', '%u043b', '%u041c', '%u043c', '%u041d', '%u043d', '%u041e', '%u043e', '%u041f', '%u043f', '%u0420', '%u0440', '%u0421', '%u0441', '%u0422', '%u0442', '%u0423', '%u0443', '%u0424', '%u0444', '%u0425', '%u0445', '%u0426', '%u0446', '%u0427', '%u0447', '%u0428', '%u0448', '%u0429', '%u0449', '%u042a', '%u044a', '%u042b', '%u044b', '%u042c', '%u044c', '%u042d', '%u044d', '%u042e', '%u044e', '%u042f', '%u044f');
+
+  $arrayCyra = array('А', 'а', 'Б', 'б', 'В', 'в', 'Г', 'г', 'Д', 'д', 'Е', 'е', 'Ё', 'ё', 'Ж', 'ж', 'З', 'з', 'И', 'и', 'Й', 'й', 'К', 'к', 'Л', 'л', 'М', 'м', 'Н', 'н', 'О', 'о', 'П', 'п', 'Р', 'р', 'С', 'с', 'Т', 'т', 'У', 'у', 'Ф', 'ф', 'Х', 'х', 'Ц', 'ц', 'Ч', 'ч', 'Ш', 'ш',  'Щ', 'щ', 'Ъ', 'ъ', 'Ы', 'ы', 'Ь', 'ь', 'Э', 'э', 'Ю', 'ю', 'Я', 'я');
+	
+ return str_replace($arrayUtfa,$arrayCyra,$string); 
+}
+	
+	protected function utf8_decode($string)
+{
+ $arrayUtfa = array('\u0410', '\u0430', '\u0411', '\u0431', '\u0412', '\u0432', '\u0413', '\u0433', '\u0414', '\u0434', '\u0415', '\u0435', '\u0401', '\u0451', '\u0416', '\u0436', '\u0417', '\u0437', '\u0418', '\u0438', '\u0419', '\u0439', '\u041a', '\u043a', '\u041b', '\u043b', '\u041c', '\u043c', '\u041d', '\u043d', '\u041e', '\u043e', '\u041f', '\u043f', '\u0420', '\u0440', '\u0421', '\u0441', '\u0422', '\u0442', '\u0423', '\u0443', '\u0424', '\u0444', '\u0425', '\u0445', '\u0426', '\u0446', '\u0427', '\u0447', '\u0428', '\u0448', '\u0429', '\u0449', '\u042a', '\u044a', '\u042b', '\u044b', '\u042c', '\u044c', '\u042d', '\u044d', '\u042e', '\u044e', '\u042f', '\u044f');
+
+  $arrayCyra = array('А', 'а', 'Б', 'б', 'В', 'в', 'Г', 'г', 'Д', 'д', 'Е', 'е', 'Ё', 'ё', 'Ж', 'ж', 'З', 'з', 'И', 'и', 'Й', 'й', 'К', 'к', 'Л', 'л', 'М', 'м', 'Н', 'н', 'О', 'о', 'П', 'п', 'Р', 'р', 'С', 'с', 'Т', 'т', 'У', 'у', 'Ф', 'ф', 'Х', 'х', 'Ц', 'ц', 'Ч', 'ч', 'Ш', 'ш',  'Щ', 'щ', 'Ъ', 'ъ', 'Ы', 'ы', 'Ь', 'ь', 'Э', 'э', 'Ю', 'ю', 'Я', 'я');
+	
+ return str_replace($arrayUtfa,$arrayCyra,$string); 
+	}
+
+	protected function normalize_license( $s ) {
+	
+    $s = preg_replace("/[^a-zA-Zа-яА-Я0-9]/ui", '', $s);
+	
+	if (mb_strlen($s)==10){}else{$s=false;}
+    return $s;
+}
+
+	
+	protected function toError($code = 400,$error='Invalid request parameters')
+	{
+	$message='';
+	switch($code) {
+            case 200:
+                $message = 'OK';
+                break;
+			case 400:
+                $message = 'BadRequest';
+                break;
+			case 401:
+                $message = 'Unauthorized';
+                break;
+			case 403:
+                $message = 'Forbidden';
+                break;
+			case 404:
+                $message = 'NotFound';
+                break;
+			case 409:
+                $message = 'Conflict';
+                break;
+			case 429:
+                $message = 'TooManyRequests';
+                break;
+			case 500:
+                $message = 'InternalServerError';
+                break;
+
+           
+
+            default:
+                $message = '';
+        }
+		
+		
+	$res = [];
+	$res['headers']['http']['protocol'] = null;	
+	$res['headers']['http']['result_code'] = $code;
+	$res['headers']['http']['message'] = $message;
+		
+	$res['error']['message']=$error;	
+		
+	$res['headers']['content-length']=strlen(json_encode($res['error']));
+	$res['headers']['content-type']='application/json; charset=utf-8';
+	$res['headers']['date']=date(DATE_RFC2822);
+	$res['headers']['vary']='Accept-Encoding';
+	$res['headers']['x-yarequestid']=null;
+	return $res;	
+	}
     
     protected function get($uri, array $params = [], array $headers = [])
     {
