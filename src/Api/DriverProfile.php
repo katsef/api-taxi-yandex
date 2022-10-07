@@ -56,12 +56,12 @@ class DriverProfile extends AbstractApi {
 			
 			
 			}else{$phones=[];}
-		if ($query['name'])
+		if (isset($query['name']))
 			{
 			$name=trim(mb_strtoupper($query['name']));
 			}else{$name=false;}
 		
-		if ($query['license'])
+		if (isset($query['license']))
 			{
 			$license = trim($this->normalize_license(mb_strtoupper($query['license'])));
 			}else{$license=false;}
